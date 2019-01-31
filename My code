@@ -1,0 +1,52 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class javalatestACSL {
+	private static String filepath = "acsl\\1819_2.txt";
+	private static int numOfInputs = 5;
+	
+	public static void main(String[] args) throws IOException {
+		Scanner textFile = new Scanner(new File(filepath));
+		String[][] letters = new String[numOfInputs][2];
+		for (int i = 0; i < numOfInputs; i++) {
+			letters[i][0] = textFile.next();
+			letters[i][1] = textFile.next();
+		}
+		textFile.close();
+		ArrayList list = new ArrayList();
+		for (int a = 0; a < numOfInputs; a++) {
+			char[] one = letters[a][0].toCharArray();
+			char[] two = letters[a][1].toCharArray();
+			for (int b = 0; b < two.length; b++) {
+				for (int c = 0; c < one.length; c++) {
+					char compared = '\u0000';
+					if (one[c] == two[b] && b == 0) {
+						list.add(String.valueOf(one[c]));
+						for (int d = 0; d <= c; d++) {
+							one[d] = '\u0000'; //null for char
+						}
+						compared = one[c];
+					} else if (one[c] == two[b] && !(compared == one[c]) ) {
+						list.add(String.valueOf(one[c]));
+						for (int d = 0; d <= c; d++) {
+							one[d] = '\u0000'; //null for char
+						}
+					}
+				}
+			}
+			Collections.sort(list);
+			for (int p = 0; p < list.size(); p++) {
+				if (p == 0) {
+					System.out.print(list.get(p));
+				} else if (!list.get(p - 1).equals(list.get(p))) {
+					System.out.print(list.get(p));
+				}
+			}
+			list.clear();
+			System.out.println();
+		}
+	}
+}
